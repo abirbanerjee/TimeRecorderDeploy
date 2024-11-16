@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.b0e97447.css","mappings":"AAAA,MAGI,4BAA8B,CAF9B,YAAa,CACb,iBAEF,CACA,SACE,sBACF","sources":["styles.css"],"sourcesContent":["th, td {\r\n    padding: 15px;\r\n    text-align: center;\r\n    border-bottom: 1px solid black;\r\n  }\r\n  tr:hover{\r\n    background-color: coral;\r\n  }"],"names":[],"sourceRoot":""}
