@@ -8,6 +8,11 @@ const ProjectCollection = db.collection("projects");
 const recordingsCollection = db.collection("recordings");
 
 export async function createCompany(companyName, projectName) {
+  const checkexisting = await ProjectCollection.findOne({
+    companyName,
+    projectName,
+  });
+  if (checkexisting) return { existing: checkexisting._id };
   const recid = await ProjectCollection.insertOne({ companyName, projectName });
   return recid;
 }
@@ -31,12 +36,6 @@ export async function getProjects() {
     delete project._id;
   });
   return projects;
-}
-
-export async function delProjects() {
-  const res = await ProjectCollection.deleteMany({
-    $nor: [{ companyName: "Gramont" }, { companyName: "Agrana" }],
-  });
 }
 
 export async function GetCompanyWiseReport(companyName) {
@@ -68,7 +67,7 @@ export async function getMonthlyRecording(month) {
     const companyProject = await ProjectCollection.findOne({
       _id: records[i].CompanyId,
     });
-    delete records[i].CompanyId;
+    // delete records[i].CompanyId;
     records[
       i
     ].company = `${companyProject.companyName} - ${companyProject.projectName}`;
@@ -78,7 +77,7 @@ export async function getMonthlyRecording(month) {
       recordings[records[i].company] = parseInt(records[i].hours);
     }
   }
-  return recordings;
+  return { recordings, records };
 }
 
 export async function fetchAllRecords() {
